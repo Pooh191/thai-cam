@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>นับถอยหลังสู่สันติภาพ | ไทย-กัมพูชา</title>
+    <title>สถานการณ์ชายแดนไทย-กัมพูชา</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
         
@@ -12,9 +12,10 @@
             --thai-red: #ed1c24;
             --thai-white: #ffffff;
             --cambodia-blue: #032ea1;
-            --cambodia-red: #e00025;
+            --cambodia-red: #000000ff;
             --gold: #ffd700;
             --silver: #c0c0c0;
+            --alert-red: #ff3333;
         }
         
         * {
@@ -26,9 +27,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #000428, #004e92);
+            background: linear-gradient(135deg, #200000, #4a0000);
             background-size: 400% 400%;
-            animation: galaxyBG 20s ease infinite;
+            animation: alertBG 15s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -39,10 +40,27 @@
             padding: 20px;
         }
         
-        @keyframes galaxyBG {
+        @keyframes alertBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+        
+        .alert-pulse {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,50,50,0.1) 0%, rgba(255,0,0,0) 70%);
+            animation: alertPulse 3s infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        @keyframes alertPulse {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            100% { transform: scale(1.2); opacity: 0.7; }
         }
         
         .stars {
@@ -71,7 +89,7 @@
         
         .container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 30px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
@@ -81,7 +99,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
             margin: 20px 0;
         }
         
@@ -92,8 +110,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
-            animation: pulse 8s infinite alternate;
+            background: radial-gradient(circle, rgba(255,50,50,0.08) 0%, rgba(255,0,0,0) 70%);
+            animation: pulse 5s infinite alternate;
             z-index: -1;
         }
         
@@ -107,7 +125,7 @@
             margin-bottom: 15px;
             font-weight: 600;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            background: linear-gradient(to right, var(--thai-white), var(--gold));
+            background: linear-gradient(to right, var(--thai-white), var(--alert-red));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 1px;
@@ -116,12 +134,29 @@
         
         .subtitle {
             font-size: clamp(1rem, 3.5vw, 1.3rem);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 300;
             opacity: 0.9;
             color: rgba(255, 255, 255, 0.9);
             line-height: 1.5;
             padding: 0 10px;
+        }
+        
+        .alert-message {
+            background: rgba(150, 0, 0, 0.4);
+            border: 1px solid var(--alert-red);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            line-height: 1.6;
+            text-align: left;
+            animation: alertFlash 3s infinite;
+        }
+        
+        @keyframes alertFlash {
+            0%, 100% { border-color: rgba(255, 0, 0, 0.3); }
+            50% { border-color: rgba(255, 0, 0, 0.8); }
         }
         
         .flags-container {
@@ -146,13 +181,13 @@
             transition: all 0.5s ease;
             position: relative;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 0, 0, 0.5);
         }
         
         .flag:hover {
             transform: scale(1.05) translateY(-5px);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
-            border-color: var(--gold);
+            border-color: var(--alert-red);
         }
         
         .flag::after {
@@ -162,128 +197,54 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%);
+            background: linear-gradient(135deg, rgba(255,50,50,0.1) 0%, rgba(255,0,0,0) 50%);
             z-index: 1;
         }
         
-        .peace-symbol {
-            font-size: clamp(3rem, 12vw, 5rem);
-            margin: 20px 0;
-            animation: float 4s ease-in-out infinite, glow 2s alternate infinite;
-            text-shadow: 0 0 20px var(--gold);
-            position: relative;
-            z-index: 2;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        
-        @keyframes glow {
-            0% { text-shadow: 0 0 10px var(--gold); }
-            100% { text-shadow: 0 0 20px var(--gold), 0 0 30px var(--silver); }
-        }
-        
-        .countdown {
+        .status-container {
             display: flex;
-            justify-content: center;
-            gap: clamp(10px, 3vw, 25px);
-            margin-bottom: 30px;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 15px;
+            margin: 25px 0;
         }
         
-        .countdown-item {
+        .status-box {
+            flex: 1;
+            min-width: 200px;
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            padding: clamp(15px, 4vw, 25px) clamp(10px, 3vw, 20px);
-            min-width: clamp(80px, 22vw, 140px);
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            text-align: left;
         }
         
-        .countdown-item:hover {
-            transform: translateY(-10px) scale(1.03);
-            background: rgba(0, 0, 0, 0.6);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 255, 255, 0.3);
+        .status-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--alert-red);
+            font-weight: 500;
+            border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+            padding-bottom: 5px;
         }
         
-        .countdown-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, var(--thai-blue), var(--cambodia-blue));
-            animation: progress 1s linear infinite;
-        }
-        
-        @keyframes progress {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        
-        .countdown-number {
-            font-size: clamp(2rem, 7vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 5px;
-            background: linear-gradient(to bottom, var(--thai-white), var(--silver));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        
-        .countdown-label {
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
-            opacity: 0.9;
-            color: rgba(255, 255, 255, 0.8);
-            letter-spacing: 1px;
-        }
-        
-        .target-date {
-            margin-top: 25px;
-            font-size: clamp(1rem, 3.5vw, 1.3rem);
-            opacity: 0.9;
+        .status-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
             color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .update-time {
+            margin-top: 25px;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            opacity: 0.8;
+            color: rgba(255, 255, 255, 0.8);
             background: rgba(0, 0, 0, 0.3);
-            padding: 10px 20px;
+            padding: 8px 15px;
             border-radius: 50px;
             display: inline-block;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
             line-height: 1.4;
-        }
-        
-        .dove {
-            position: absolute;
-            font-size: 1.5rem;
-            opacity: 0;
-            animation: fly linear infinite;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        @keyframes fly {
-            0% {
-                transform: translateX(-100px) translateY(50px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(calc(100vw + 100px)) translateY(-100px) rotate(20deg);
-                opacity: 0;
-            }
         }
         
         /* ปรับขนาดสำหรับ iPad ในแนวตั้ง */
@@ -302,13 +263,8 @@
                 height: 93px;
             }
             
-            .countdown {
+            .status-container {
                 gap: 20px;
-            }
-            
-            .countdown-item {
-                min-width: 120px;
-                padding: 20px 15px;
             }
         }
         
@@ -328,13 +284,8 @@
                 height: 80px;
             }
             
-            .countdown {
+            .status-container {
                 gap: 15px;
-            }
-            
-            .countdown-item {
-                min-width: 110px;
-                padding: 18px 12px;
             }
         }
         
@@ -354,26 +305,21 @@
                 height: 60px;
             }
             
-            .countdown {
-                gap: 8px;
+            .alert-message {
+                padding: 12px;
+                font-size: 0.95rem;
             }
             
-            .countdown-item {
-                min-width: 70px;
-                padding: 12px 8px;
-                border-radius: 8px;
+            .status-box {
+                min-width: 100%;
             }
             
-            .countdown-number {
-                font-size: 1.8rem;
+            .status-title {
+                font-size: 1rem;
             }
             
-            .countdown-label {
-                font-size: 0.8rem;
-            }
-            
-            .peace-symbol {
-                margin: 15px 0;
+            .status-content {
+                font-size: 0.9rem;
             }
         }
         
@@ -394,7 +340,8 @@
             }
             
             .subtitle {
-                margin-bottom: 20px;
+                margin-bottom: 15px;
+                font-size: 1.1rem;
             }
             
             .flags {
@@ -407,38 +354,31 @@
                 height: 53px;
             }
             
-            .peace-symbol {
-                margin: 10px 0;
-                font-size: 2.5rem;
+            .alert-message {
+                padding: 12px;
+                font-size: 0.95rem;
+                margin: 15px 0;
             }
             
-            .countdown {
-                gap: 8px;
-                margin-bottom: 20px;
+            .status-container {
+                margin: 15px 0;
+                gap: 10px;
             }
             
-            .countdown-item {
-                min-width: 70px;
-                padding: 12px 8px;
+            .status-box {
+                min-width: calc(50% - 5px);
+                padding: 12px;
             }
             
-            .countdown-number {
-                font-size: 1.8rem;
-            }
-            
-            .countdown-label {
-                font-size: 0.8rem;
-            }
-            
-            .target-date {
+            .update-time {
                 margin-top: 15px;
-                font-size: 1rem;
-                padding: 8px 15px;
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
+    <div class="alert-pulse"></div>
     <div class="stars" id="stars"></div>
     
     <div class="container">
@@ -446,33 +386,39 @@
             <div class="flags">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Thailand.svg" alt="ธงไทย" class="flag">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_Cambodia.svg" alt="ธงกัมพูชา" class="flag">
-    
             </div>
         </div>
         
-        <h1>นับถอยหลังสู่สันติภาพ</h1>
-        <div class="subtitle">ความร่วมมือระหว่างประเทศไทยและราชอาณาจักรกัมพูชา</div>
+        <h1>สถานการณ์ชายแดนไทย-กัมพูชา</h1>
+        <div class="subtitle">การเผชิญหน้าล่าสุดและการเจรจาระหว่างกองทัพ</div>
         
-        <div class="countdown">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">00</div>
-                <div class="countdown-label">วัน</div>
+        <div class="alert-message">
+            ⚠️ <strong>ประกาศ:</strong> กัมพูชายังไม่หยุดยิง ฝ่ายไทยได้ใช้มาตรการที่เหมาะสมในการตอบโต้แล้ว โดยทางแม่ทัพภาคที่ 1 และ 2 ของประเทศไทยกำลังพยายามเจรจากับแม่ทัพภาคที่ 3, 4 และ 5 ของกัมพูชาเพื่อลดความตึงเครียด
+        </div>
+        
+        <div class="status-container">
+            <div class="status-box">
+                <div class="status-title">สถานการณ์ฝั่งไทย</div>
+                <div class="status-content">
+                    - กองทัพภาคที่ 1 และ 2 เตรียมพร้อมเต็มที่<br>
+                    - ใช้มาตรการตอบโต้ตามสัดส่วน<br>
+                    - เจรจากับฝ่ายกัมพูชา เวลา 10:00 น.<br>
+                    - ปกป้องอธิปไตยและประชาชน
+                </div>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">00</div>
-                <div class="countdown-label">ชั่วโมง</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">00</div>
-                <div class="countdown-label">นาที</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">00</div>
-                <div class="countdown-label">วินาที</div>
+            
+            <div class="status-box">
+                <div class="status-title">สถานการณ์ฝั่งกัมพูชา</div>
+                <div class="status-content">
+                    - กองทัพภาคที่ 3, 4 และ 5 ยังคงยิง<br>
+                    - ยังไม่มีการประกาศหยุดยิง<br>
+                    - กำลังเจรจากับฝ่ายไทย<br>
+                    - สถานการณ์ยังตึงเครียด
+                </div>
             </div>
         </div>
         
-        <div class="target-date">วันที่ 29 กรกฎาคม 2568 เวลา 00:00 น.</div>
+        <div class="update-time" id="updateTime">อัปเดตล่าสุด: </div>
     </div>
 
     <script>
@@ -503,95 +449,23 @@
             }
         }
         
-        // สร้างนกพิราบบิน (เฉพาะบนหน้าจอใหญ่)
-        function createDoves() {
-            if (window.innerWidth < 768) return;
-            
-            const doveCount = window.innerWidth < 1024 ? 3 : 5;
-            
-            for (let i = 0; i < doveCount; i++) {
-                const dove = document.createElement('div');
-                dove.classList.add('dove');
-                dove.innerHTML = '🕊️';
-                
-                // สุ่มตำแหน่งเริ่มต้นและความเร็ว
-                const startY = Math.random() * 100;
-                const duration = Math.random() * 20 + 15;
-                const delay = Math.random() * 15;
-                const size = Math.random() * 1 + 0.5;
-                
-                dove.style.top = `${startY}%`;
-                dove.style.fontSize = `${size}rem`;
-                dove.style.animationDuration = `${duration}s`;
-                dove.style.animationDelay = `${delay}s`;
-                
-                document.body.appendChild(dove);
-            }
-        }
-        
-        // ตั้งวันที่เป้าหมาย - 29 กรกฎาคม 2568 เวลา 00:00 น. (เวลาไทย UTC+7)
-        const targetDate = new Date('2025-07-28T17:00:00Z'); // 28 กรกฎาคม 2025 เวลา 17:00 UTC = 29 กรกฎาคม 00:00 น. เวลาไทย
-        
-        function updateCountdown() {
+        // อัพเดทเวลาปัจจุบัน
+        function updateTime() {
             const now = new Date();
-            const diff = targetDate - now;
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false,
+                timeZone: 'Asia/Bangkok'
+            };
             
-            // คำนวณเวลาที่เหลือ
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            const formatter = new Intl.DateTimeFormat('th-TH', options);
+            const formattedDate = formatter.format(now);
             
-            // แสดงผล
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            
-            // ถ้าเวลาหมดแล้ว
-            if (diff <= 0) {
-                clearInterval(countdownInterval);
-                document.querySelector('h1').textContent = 'ถึงเวลาสันติภาพแล้ว!';
-                document.querySelector('.subtitle').textContent = 'ความสงบสุขระหว่างประเทศไทยและราชอาณาจักรกัมพูชา';
-                document.querySelector('.countdown').style.display = 'none';
-                document.querySelector('.target-date').textContent = 'วันที่ 29 กรกฎาคม 2568 เวลา 00:00 น. - สันติภาพได้เริ่มขึ้นแล้ว';
-                
-                // เปลี่ยนสัญลักษณ์สันติภาพ
-                const peaceSymbol = document.querySelector('.peace-symbol');
-                peaceSymbol.innerHTML = '🕊️☮️✌️';
-                peaceSymbol.style.fontSize = 'clamp(4rem, 12vw, 6rem)';
-                peaceSymbol.style.animation = 'float 2s ease-in-out infinite, rainbow 3s linear infinite';
-                
-                // เพิ่ม animation สีรุ้ง
-                const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes rainbow {
-                        0% { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
-                        16% { color: #ff7f00; text-shadow: 0 0 15px #ff7f00; }
-                        32% { color: #ffff00; text-shadow: 0 0 15px #ffff00; }
-                        48% { color: #00ff00; text-shadow: 0 0 15px #00ff00; }
-                        64% { color: #0000ff; text-shadow: 0 0 15px #0000ff; }
-                        80% { color: #4b0082; text-shadow: 0 0 15px #4b0082; }
-                        100% { color: #9400d3; text-shadow: 0 0 15px #9400d3; }
-                    }
-                `;
-                document.head.appendChild(style);
-                
-                // ปล่อยนกพิราบเพิ่ม (เฉพาะบนหน้าจอใหญ่)
-                if (window.innerWidth >= 768) {
-                    for (let i = 0; i < 5; i++) {
-                        setTimeout(() => {
-                            const dove = document.createElement('div');
-                            dove.classList.add('dove');
-                            dove.innerHTML = '🕊️';
-                            dove.style.top = `${Math.random() * 100}%`;
-                            dove.style.fontSize = `${Math.random() * 1.2 + 0.8}rem`;
-                            dove.style.animationDuration = `${Math.random() * 8 + 4}s`;
-                            document.body.appendChild(dove);
-                        }, i * 500);
-                    }
-                }
-            }
+            document.getElementById('updateTime').textContent = `อัปเดตล่าสุด: ${formattedDate} น.`;
         }
         
         // ปรับขนาดเมื่อเปลี่ยน orientation
@@ -599,19 +473,14 @@
             // ลบดาวเก่าและสร้างใหม่
             document.getElementById('stars').innerHTML = '';
             createStars();
-            
-            // ลบนกพิราบเก่าและสร้างใหม่
-            document.querySelectorAll('.dove').forEach(dove => dove.remove());
-            createDoves();
         }
         
         // เริ่มสร้างเอฟเฟกต์
         createStars();
-        createDoves();
+        updateTime();
         
-        // อัพเดททุก 1 วินาที
-        const countdownInterval = setInterval(updateCountdown, 1000);
-        updateCountdown(); // เรียกครั้งแรกทันทีเพื่อไม่ให้ดีเลย์
+        // อัพเดทเวลาทุก 1 นาที
+        setInterval(updateTime, 60000);
         
         // ฟังการเปลี่ยนขนาดหน้าจอ
         window.addEventListener('resize', handleResize);
